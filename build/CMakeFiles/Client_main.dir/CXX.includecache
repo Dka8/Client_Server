@@ -65,6 +65,8 @@ ws2tcpip.h
 ../Network/include/SocketHandle.h
 basetsd.h
 -
+basetsd.h
+-
 
 ../Network/include/TcpSocket.h
 Socket.h

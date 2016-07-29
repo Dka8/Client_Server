@@ -24,6 +24,7 @@
 				<Option type="2"/>
 				<Option compiler="gcc"/>
 				<Compiler>
+					<Add option="-D_WV_SYSTEM_WINDOWS"/>
 					<Add directory="D:/Code_Blocks/Vega/Network/include"/>
 					<Add directory="D:/Code_Blocks/Vega/Server/include"/>
 					<Add directory="D:/Code_Blocks/Vega/Client/include"/>
@@ -49,6 +50,7 @@
 				<Option type="2"/>
 				<Option compiler="gcc"/>
 				<Compiler>
+					<Add option="-D_WV_SYSTEM_WINDOWS"/>
 					<Add directory="D:/Code_Blocks/Vega/Network/include"/>
 					<Add directory="D:/Code_Blocks/Vega/Server/include"/>
 					<Add directory="D:/Code_Blocks/Vega/Client/include"/>
@@ -84,6 +86,7 @@
 				<Option type="2"/>
 				<Option compiler="gcc"/>
 				<Compiler>
+					<Add option="-D_WV_SYSTEM_WINDOWS"/>
 					<Add directory="D:/Code_Blocks/Vega/Network/include"/>
 					<Add directory="D:/Code_Blocks/Vega/Server/include"/>
 					<Add directory="D:/Code_Blocks/Vega/Client/include"/>
@@ -109,6 +112,7 @@
 				<Option type="2"/>
 				<Option compiler="gcc"/>
 				<Compiler>
+					<Add option="-D_WV_SYSTEM_WINDOWS"/>
 					<Add directory="D:/Code_Blocks/Vega/Network/include"/>
 					<Add directory="D:/Code_Blocks/Vega/Server/include"/>
 					<Add directory="D:/Code_Blocks/Vega/Client/include"/>
@@ -134,6 +138,7 @@
 				<Option type="2"/>
 				<Option compiler="gcc"/>
 				<Compiler>
+					<Add option="-D_WV_SYSTEM_WINDOWS"/>
 					<Add directory="D:/Code_Blocks/Vega/Network/include"/>
 					<Add directory="D:/Code_Blocks/Vega/Server/include"/>
 					<Add directory="D:/Code_Blocks/Vega/Client/include"/>
@@ -159,6 +164,7 @@
 				<Option type="2"/>
 				<Option compiler="gcc"/>
 				<Compiler>
+					<Add option="-D_WV_SYSTEM_WINDOWS"/>
 					<Add directory="D:/Code_Blocks/Vega/Network/include"/>
 					<Add directory="D:/Code_Blocks/Vega/Server/include"/>
 					<Add directory="D:/Code_Blocks/Vega/Client/include"/>
@@ -184,6 +190,7 @@
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
+					<Add option="-D_WV_SYSTEM_WINDOWS"/>
 					<Add directory="D:/Code_Blocks/Vega/Network/include"/>
 					<Add directory="D:/Code_Blocks/Vega/Server/include"/>
 					<Add directory="D:/Code_Blocks/Vega/Client/include"/>
@@ -209,6 +216,7 @@
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
+					<Add option="-D_WV_SYSTEM_WINDOWS"/>
 					<Add directory="D:/Code_Blocks/Vega/Network/include"/>
 					<Add directory="D:/Code_Blocks/Vega/Server/include"/>
 					<Add directory="D:/Code_Blocks/Vega/Client/include"/>
@@ -234,6 +242,7 @@
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
+					<Add option="-D_WV_SYSTEM_WINDOWS"/>
 					<Add directory="D:/Code_Blocks/Vega/Network/include"/>
 					<Add directory="D:/Code_Blocks/Vega/Server/include"/>
 					<Add directory="D:/Code_Blocks/Vega/Client/include"/>
@@ -259,6 +268,7 @@
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
+					<Add option="-D_WV_SYSTEM_WINDOWS"/>
 					<Add directory="D:/Code_Blocks/Vega/Network/include"/>
 					<Add directory="D:/Code_Blocks/Vega/Server/include"/>
 					<Add directory="D:/Code_Blocks/Vega/Client/include"/>

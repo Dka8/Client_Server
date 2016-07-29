@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 2.8.9)
 project(Client_Server)
-#add_subdirectory(Network)
+
+IF (WIN32)
+  add_definitions(-D_WV_SYSTEM_WINDOWS)
+ENDIF()
 
 include_directories(Network/include)
 include_directories(Server/include)

@@ -35,7 +35,7 @@ namespace wv {
 
 		//позвляет узнать в каком состоянии находится сокет
 		bool isBlocking() const;
-		
+
 	protected:
 		//определяет типо сокета,
 		//является обязательным параметром при вызове конструктора класса
@@ -66,6 +66,7 @@ namespace wv {
 		bool			m_isBlocking;	// хранит информацию о в каком состоянии находится сокет
 	};
 
+
 	namespace be {
 
 		//вспомогательный класс для работы напрямую с Berkeley Sockets
@@ -77,7 +78,7 @@ namespace wv {
 			//возвращает специфическую Berkeley Sockets структуру, которая хранит
 			//ip адрес и порт в понятном для Berkeley Sockets виде
 			static sockaddr_in createAddress(intU32 l_address, intU16 l_port);
-			
+
 			//метод возвращает специфическое значение INVALID_SOCKET,
 			//позволяет быстро проверить уникальный идентификатор сокета в системе
 			static SocketHandle invalidSocket();
@@ -92,6 +93,7 @@ namespace wv {
 			static Socket::Status getErrorStatus();
 		};
 	}
+
 }
 
 #endif // SOCKET_H
