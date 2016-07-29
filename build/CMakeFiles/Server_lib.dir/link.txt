@@ -1,0 +1,2 @@
+C:\PROGRA~2\CODEBL~1\MinGW\bin\ar.exe qc libServer_lib.a  CMakeFiles/Server_lib.dir/Server/src/Server.cpp.obj
+C:\PROGRA~2\CODEBL~1\MinGW\bin\ranlib.exe libServer_lib.a

@@ -1,7 +1,7 @@
 #ifndef NETWORK_H_INCLUDED
 #define NETWORK_H_INCLUDED
 
-//собирает воедино библиотеки для работы с сетью
+//СЃРѕР±РёСЂР°РµС‚ РІРѕРµРґРёРЅРѕ Р±РёР±Р»РёРѕС‚РµРєРё РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ СЃРµС‚СЊСЋ
 
 #include "IpAddress.h"
 #include "Socket.h"

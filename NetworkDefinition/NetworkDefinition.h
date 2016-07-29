@@ -2,7 +2,7 @@
 #ifndef NetworkDefinition_H
 #define NetworkDefinition_H
 
-//действующие порты сервера
+//РґРµР№СЃС‚РІСѓСЋС‰РёРµ РїРѕСЂС‚С‹ СЃРµСЂРІРµСЂР°
 #define ServerPortTCP 5600
 #define ServerPortUDP 5800
 

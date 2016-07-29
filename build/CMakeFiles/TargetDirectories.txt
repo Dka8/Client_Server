@@ -1,0 +1,7 @@
+D:/Code_Blocks/Vega/build/CMakeFiles/Network_lib.dir
+D:/Code_Blocks/Vega/build/CMakeFiles/edit_cache.dir
+D:/Code_Blocks/Vega/build/CMakeFiles/Server_lib.dir
+D:/Code_Blocks/Vega/build/CMakeFiles/Client_lib.dir
+D:/Code_Blocks/Vega/build/CMakeFiles/Server_main.dir
+D:/Code_Blocks/Vega/build/CMakeFiles/Client_main.dir
+D:/Code_Blocks/Vega/build/CMakeFiles/rebuild_cache.dir
