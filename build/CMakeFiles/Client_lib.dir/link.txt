@@ -1,2 +1,0 @@
-C:\PROGRA~2\CODEBL~1\MinGW\bin\ar.exe qc libClient_lib.a  CMakeFiles/Client_lib.dir/Client/src/ClientTCP.cpp.obj CMakeFiles/Client_lib.dir/Client/src/ClientUDP.cpp.obj
-C:\PROGRA~2\CODEBL~1\MinGW\bin\ranlib.exe libClient_lib.a

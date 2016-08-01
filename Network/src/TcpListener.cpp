@@ -1,4 +1,6 @@
-#include "TcpSocket.h"
+#include "../include/TcpListener.hpp"
+#include "../include/TcpSocket.hpp"
+#include "SocketBE.hpp"
 
 namespace wv{
     TcpListener::TcpListener() :

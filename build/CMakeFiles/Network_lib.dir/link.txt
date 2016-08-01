@@ -1,2 +1,0 @@
-C:\PROGRA~2\CODEBL~1\MinGW\bin\ar.exe qc libNetwork_lib.a  CMakeFiles/Network_lib.dir/Network/src/IpAddress.cpp.obj CMakeFiles/Network_lib.dir/Network/src/Socket.cpp.obj CMakeFiles/Network_lib.dir/Network/src/SocketBE.cpp.obj CMakeFiles/Network_lib.dir/Network/src/TcpListener.cpp.obj CMakeFiles/Network_lib.dir/Network/src/TcpSocket.cpp.obj CMakeFiles/Network_lib.dir/Network/src/UdpSocket.cpp.obj
-C:\PROGRA~2\CODEBL~1\MinGW\bin\ranlib.exe libNetwork_lib.a

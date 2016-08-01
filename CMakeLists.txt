@@ -1,32 +1,65 @@
-cmake_minimum_required(VERSION 2.8.9)
+cmake_minimum_required(VERSION 2.8)
 project(Client_Server)
 
-IF (WIN32)
-  add_definitions(-D_WV_SYSTEM_WINDOWS)
-ENDIF()
+if(${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
+    set(OS_WINDOW 1)
+    
+elseif(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
+    set(OS_UNIX 1)
+    
+else()
+    message(FATAL_ERROR "Unsupported operating system") 
 
-include_directories(Network/include)
-include_directories(Server/include)
-include_directories(Client/include)
-include_directories(NetworkDefinition)
+endif()
 
-file(GLOB LIB_SOURCES_NETWORK "Network/src/*.cpp" )
-set(HEADERS_NETWORK "Network/include/Config.h" "Network/include/IpAddress.h" "Network/include/Network.h" "Network/include/SafeTypes.h" "Network/include/Socket.h" "Network/include/SocketHandle.h" "Network/include/UdpSocket.h" "Network/include/TcpSocket.h")
-add_library( Network_lib STATIC ${LIB_SOURCES_NETWORK} ${HEADERS_NETWORK})
-target_link_libraries(Network_lib ws2_32)
+########################################
 
-file(GLOB LIB_SOURCES_SERVER "Server/src/*.cpp")
-set(HEADERS_SERVER "Server/include/Server.h" "NetworkDefinition/NetworkDefinition.h")
-add_library( Server_lib STATIC ${LIB_SOURCES_SERVER} ${HEADERS_SERVER})
-target_link_libraries(Server_lib Network_lib ws2_32)
 
-file(GLOB LIB_SOURCES_CLIENT "Client/src/*.cpp")
-set(HEADERS_CLIENT "Client/include/Client.h" "NetworkDefinition/NetworkDefinition.h" "Client/include/ClientTCP.h" "Client/include/ClientUDP.h")
-add_library( Client_lib STATIC ${LIB_SOURCES_CLIENT} ${HEADERS_CLIENT})
-target_link_libraries(Client_lib Network_lib ws2_32)
+add_subdirectory(Network)
+
+########################################
+
+set(SERVER_INCROOT ${PROJECT_SOURCE_DIR}/Server/include)
+set(SERVER_SRCROOT ${PROJECT_SOURCE_DIR}/Server/src)
+
+set(SERVER_SRC
+    ${PROJECT_SOURCE_DIR}/NetworkDefinition.hpp
+    ${SERVER_SRCROOT}/Server.cpp
+    ${SERVER_INCROOT}/Server.hpp
+)
+
+set(SERVER_EXT_LIBS)
+set(SERVER_EXT_LIBS ${SERVER_EXT_LIBS} Network)
+
+add_library(Server ${SERVER_SRC})
+target_link_libraries(Server ${SERVER_EXT_LIBS})
+
+########################################
+
+set(CLIENT_INCROOT ${PROJECT_SOURCE_DIR}/Client/include)
+set(CLIENT_SRCROOT ${PROJECT_SOURCE_DIR}/Client/src)
+
+set(CLIENT_SRC
+    ${PROJECT_SOURCE_DIR}/NetworkDefinition.hpp
+    ${CLIENT_INCROOT}/Client.hpp
+    ${CLIENT_SRCROOT}/ClientTCP.cpp
+    ${CLIENT_INCROOT}/ClientTCP.hpp
+    ${CLIENT_SRCROOT}/ClientUDP.cpp
+    ${CLIENT_INCROOT}/ClientUDP.hpp
+)
+
+set(CLIENT_EXT_LIBS)
+set(CLIENT_EXT_LIBS ${CLIENT_EXT_LIBS} Network)
+
+add_library(Client ${CLIENT_SRC})
+target_link_libraries(Client ${CLIENT_EXT_LIBS})
+
+########################################
 
 add_executable(Server_main Server_main.cpp)
-target_link_libraries(Server_main Server_lib Network_lib ws2_32)
+target_link_libraries(Server_main Server)
+
+########################################
 
 add_executable(Client_main Client_main.cpp)
-target_link_libraries(Client_main Client_lib Network_lib ws2_32)
+target_link_libraries(Client_main Client)

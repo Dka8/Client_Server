@@ -1,8 +1,13 @@
-#include "TcpSocket.h"
-#include "IpAddress.h"
+#include "../include/TcpSocket.hpp"
+#include "../include/IpAddress.hpp"
+#include "SocketBE.hpp"
 
 namespace {
-    const int flags = 0;
+    #ifdef SYSTEM_LINUX
+        const int flags = MSG_NOSIGNAL;
+    #else
+        const int flags = 0;
+    #endif
 }
 
 namespace wv{
@@ -116,5 +121,4 @@ namespace wv{
         }
     }
 }
-
 
