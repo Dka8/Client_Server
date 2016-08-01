@@ -4,6 +4,7 @@
 #if defined (_WIN32)
 
     #define SYSTEM_WINDOWS
+    #define _WIN32_WINNT 0x501
 
 #elif defined(__unix__)
 
