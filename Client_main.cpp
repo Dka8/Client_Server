@@ -1,12 +1,11 @@
-#include "Client/include/ClientUDP.hpp"
-#include "Client/include/ClientTCP.hpp"
+//#include "Client/include/ClientUDP.hpp"
+//#include "Client/include/ClientTCP.hpp"
+#include "Client\include\Client.hpp"
+#include "Client\include\Protocol.h"
 #include <sstream>
 #include <iostream>
 
 int main() {
-    //создаем пустой указатель на объект клиент
-    Client*		client(NULL);
-
     //вступительные слова
     std::cout << "Welcom!" << std::endl;
     std::cout << "Input connect protocol and Ip server's address" << std::endl;
@@ -56,13 +55,16 @@ int main() {
 
     //в зависимости от введенного пользователем протокола подключения,
     //создаем соответствующий инстанс объекта типа Client
+	Client		client(address);
     if ((protocol == "UDP") || (protocol == "Udp") || (protocol == "udp")) {
         std::cout << "Setting your client to use UDP protocol\n";
-        client = new ClientUDP(address);
+        //client = new ClientUDP(address);
+		client.SetProtocol(new UDP(&client));
     }
     else if ((protocol == "TCP") || (protocol == "Tcp") || (protocol == "tcp")) {
         std::cout << "Setting your client to use TCP protocol\n";
-        client = new ClientTCP(address);
+        //client = new ClientTCP(address);
+		client.SetProtocol(new TCP(&client));
     }
 
     //благадаря предыдущим проверкам сюда не должны попасть
@@ -71,11 +73,11 @@ int main() {
     }
 
     //пытаемся подключиться к серверу
-    if (client->Connect()) {
+    if (client.Connect()) {
 
         //в случае успеха, готовимся принимать строку от пользователя
         std::cout << "Input line to sent to server or print \"exit\":\n";
-        while (client->IsConnected()) {
+        while (client.IsConnected()) {
 
             //принимаем строку от пользователя
             std::string lineToSend, lineToReceive;
@@ -85,19 +87,14 @@ int main() {
             if (!lineToSend.size()) { continue; }
 
             //выход из цикла при написании слова exit
-            if (lineToSend == "exit") { client->Disconnect(); break; }
+            if (lineToSend == "exit") { client.Disconnect(); break; }
 
             //отправляет строку на сервер,
             //и получаем ссылке ответ сервера
-            if (client->Update(lineToSend, lineToReceive)) {
+            if (client.Update(lineToSend, lineToReceive)) {
                 std::cout << "> ";
                 std::cout << lineToReceive << std::endl << std::endl;
             }
         }
     }
-
-    //при выходе из цикла освобождаем память занятую объектом типа Client
-    //и завершаем выполнение программы
-    delete client;
-    client = NULL;
 }

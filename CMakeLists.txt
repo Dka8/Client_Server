@@ -42,10 +42,8 @@ set(CLIENT_SRCROOT ${PROJECT_SOURCE_DIR}/Client/src)
 set(CLIENT_SRC
     ${PROJECT_SOURCE_DIR}/NetworkDefinition.hpp
     ${CLIENT_INCROOT}/Client.hpp
-    ${CLIENT_SRCROOT}/ClientTCP.cpp
-    ${CLIENT_INCROOT}/ClientTCP.hpp
-    ${CLIENT_SRCROOT}/ClientUDP.cpp
-    ${CLIENT_INCROOT}/ClientUDP.hpp
+    ${CLIENT_SRCROOT}/Client.cpp
+    ${CLIENT_INCROOT}/Protocol.h
 )
 
 set(CLIENT_EXT_LIBS)

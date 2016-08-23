@@ -2,31 +2,35 @@
 #define CLIENT_H
 #include "../../Network/Network.hpp"
 #include "../../NetworkDefinition.hpp"
-#include <string>
 
-//интерфейст для клиента
+class Protocol;
+//интерфейс для клиента
 class Client
 {
 public:
     //клиенту необходимо знать ip адресс сервера
-    Client(const wv::IpAddress l_address) :
-        m_connected		(false),
-        m_serverIp		(wv::IpAddress(l_address)) {};
+	Client(const wv::IpAddress l_address);
 
     //вирутальный деструктор
-    virtual ~Client() {};
+	~Client();
 
     //вируальные методы, описывающие работу клиента
     //в зависимости от используемого протокола
-    virtual bool Connect() = 0;
-    virtual bool Update(const std::string& l_send, std::string& l_reveive) = 0;
-    virtual void Disconnect() = 0;
+    bool Connect();
+    bool Update(const std::string& l_send, std::string& l_reveive);
+    bool Disconnect();
 
     //проверка статуса клиента
-    bool IsConnected() const { return m_connected; }
+	bool IsConnected() const;
+	wv::IpAddress GetServerIp();
 
-protected:
+	void SetProtocol(Protocol* l_protocol);
+	void Connected();
+	void Disconnected();
 
+private:
+
+	Protocol*		m_protocol;
     //статус клиента
     bool			m_connected;
 

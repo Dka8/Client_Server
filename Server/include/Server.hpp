@@ -34,9 +34,9 @@ private:
     void UpdateTCP();
 
     //обработка полученной строки
-    int digitSum(const std::string& l_string);
-    std::pair<int,int> digitMinMax(const std::string& l_string);
-    std::vector<int> digitSort(const std::string& l_string);
+    //int digitSum(const std::string& l_string);
+    //std::pair<int,int> digitMinMax(const std::string& l_string);
+    //std::vector<int> digitSort(const std::string& l_string);
 
     //сокет для соединения по Udp
     wv::UdpSocket	m_socketUDP;
