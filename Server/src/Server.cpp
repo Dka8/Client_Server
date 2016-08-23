@@ -2,7 +2,10 @@
 #include <iostream>
 #include <algorithm>
 
-Server::Server() : m_running(false){}
+Server::Server() :
+	m_running(false)
+	//m_udpThread(&Server::UpdateUDP, this)
+	{}
 Server::~Server() { Stop(); }
 
 bool Server::Start() {

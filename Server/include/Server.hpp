@@ -2,8 +2,9 @@
 #define SERVER_H
 #include "../../Network/Network.hpp"
 #include "../../NetworkDefinition.hpp"
-#include <string>
+//#include <string>
 #include <vector>
+#include <thread>
 
 class Server
 {
@@ -49,6 +50,8 @@ private:
 
     //следит за колличеством полученных данных
     size_t	m_totalReceived;
+
+	//std::thread m_udpThread;
 };
 
 #endif // !Server_H
