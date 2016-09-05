@@ -5,7 +5,7 @@ void CommandProcess(Server* l_server) {
 	while (l_server->IsRunning()) {
 		std::string str;
 		std::getline(std::cin, str);
-		if (str == "!quit") {
+		if (str == "quit") {
 			l_server->Stop();
 			break;
 		}

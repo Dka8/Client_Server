@@ -6,6 +6,11 @@
 #include <iostream>
 #include <vector>
 
+
+// класс интерфейс, определяет общие методы работы с протоколами
+// родительский класс для каждого конкретного протокола
+// логика работы основана на паттерне "стратегия"
+// хранит указатель на инстанс класса @Client
 class Protocol {
 public:
 	Protocol(Client* l_client) :
@@ -13,15 +18,25 @@ public:
 	{}
 	virtual ~Protocol() {};
 
+	// подключает клиент к серверу
 	virtual bool Connect() = 0;
+
+	// отправляет на сервер и принимает строку ответа от сервера
 	virtual bool Update(const std::string& l_send, std::string& l_reseive) = 0;
+
+	// отключает клиент от сервера
 	virtual bool Disconnect() = 0;
 protected:
+	// изменяет переменную, отвечающую за статус подключения в классе @Client
+	void Connected() { m_client->m_connected = true; }
+	void Disconnected() { m_client->m_connected = false; }
+	wv::IpAddress GetServerIp() { return m_client->m_serverIp; }
+
+	// указатель на инстанс @Client
 	Client*		m_client;
 };
 
-#endif // !WAVE_PROTOCOL_H
-
+// логика работы с сетью по протоколу Udp
 class UDP : public Protocol {
 public:
 	UDP(Client* l_client) :
@@ -34,14 +49,14 @@ public:
 		m_socket.Bind(wv::Socket::AnyPort);
 		std::cout << "UDP protocol" << std::endl
 			<< "Bound client to port: " << m_socket.getLocalPort() << std::endl;
-		m_client->Connected();
+		Connected();
 		return true;
 	}
 	bool Update(const std::string& l_send, std::string& l_receive) {
-		if (m_socket.Send(l_send.c_str(), l_send.size(), m_client->GetServerIp(), ServerPortUDP) != wv::Socket::Done) {
+		if (m_socket.Send(l_send.c_str(), l_send.size(), GetServerIp(), ServerPortUDP) != wv::Socket::Done) {
 			m_socket.Unbind();
 			std::cout << "Failed to sent data\n";
-			m_client->Disconnected();
+			Disconnected();
 			return false;
 		}
 
@@ -57,12 +72,12 @@ public:
 			return true;
 		}
 		std::cout << "Failed to receive data\n";
-		m_client->Disconnected();
+		Disconnected();
 		return false;
 	}
 	bool Disconnect() {
 		if (!m_client->IsConnected()) { return false; }
-		m_client->Disconnected();
+		Disconnected();
 		m_socket.Unbind();
 		return true;
 	}
@@ -70,6 +85,7 @@ private:
 	wv::UdpSocket		m_socket;
 };
 
+// логика работы с сетью по протоколу Tcp
 class TCP : public Protocol {
 public:
 	TCP(Client* l_client) :
@@ -79,18 +95,17 @@ public:
 
 	bool Connect() {
 		if (m_client->IsConnected()) { return false; }
-		//m_socket.Connect(m_serverIp, Network::ServerPortTCP);
 		std::cout << "TCP protocol" << std::endl
 			<< "Bound client to port: " << m_socket.getLocalPort() << std::endl;
-		m_client->Connected();
+		Connected();
 		return true;
 	}
 	bool Update(const std::string& l_send, std::string& l_receive) {
-		m_socket.Connect(m_client->GetServerIp(), ServerPortTCP);
+		m_socket.Connect(GetServerIp(), ServerPortTCP);
 		if (m_socket.Send(l_send.c_str(), l_send.size()) != wv::Socket::Done) {
 			m_socket.Disconnect();
 			std::cout << "Failed to sent data\n";
-			m_client->Disconnected();
+			Disconnected();
 			return false;
 		}
 
@@ -105,15 +120,17 @@ public:
 			return true;
 		}
 		std::cout << "Failed to receive data\n";
-		m_client->Disconnected();
+		Disconnected();
 		return false;
 	}
 	bool Disconnect() {
 		if (!m_client->IsConnected()) { return false; }
 		m_socket.Disconnect();
-		m_client->Disconnected();
+		Disconnected();
 		return true;
 	}
 private:
 	wv::TcpSocket		m_socket;
 };
+
+#endif // !WAVE_PROTOCOL_H

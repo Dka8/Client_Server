@@ -1,7 +1,6 @@
 #ifndef NETWORK_EXPORT_H
 #define NETWORK_EXPORT_H
 
-//#include <Network/Config.hpp>
 #include "../Config.hpp"
 
 #define NETWORK_EXPORT

@@ -1,13 +1,7 @@
 #ifndef NETWORK_SOCKET_H
 #define NETWORK_SOCKET_H
-//#include <Network/include/Export.hpp>
-//#include <Network/include/SocketHandle.hpp>
 #include "Export.hpp"
 #include "SocketHandle.hpp"
-
-//библиотеки специфические для виндоус содержат описание и исполнение Berkeley Sockets
-//#include <winsock2.h>
-//#include <ws2tcpip.h>
 
 
 namespace wv {

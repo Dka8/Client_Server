@@ -1,6 +1,6 @@
 #ifndef NETWORK_SOCKETHANDLE_H
 #define NETWORK_SOCKETHANDLE_H
-//#include "Network/Config.hpp"
+
 #include "../Config.hpp"
 
 #if defined(SYSTEM_WINDOW)

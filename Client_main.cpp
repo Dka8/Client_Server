@@ -1,100 +1,73 @@
-//#include "Client/include/ClientUDP.hpp"
-//#include "Client/include/ClientTCP.hpp"
 #include "Client\include\Client.hpp"
 #include "Client\include\Protocol.h"
-#include <sstream>
+#include <string>
+#include <unordered_set>
 #include <iostream>
 
-int main() {
-    //вступительные слова
-    std::cout << "Welcom!" << std::endl;
-    std::cout << "Input connect protocol and Ip server's address" << std::endl;
-    std::cout << "TCP / Tcp / tcp or UDP / Udp / udp" << std::endl;
-    std::cout << "Ip adress example: 127.0.0.1" <<std::endl;
+// аллиасы для хранения строк, для обращения к справке приложения
+using HelpCommands = std::unordered_set<std::string>;
 
-    //переменные для хранения введенных данных
-    std::string input, protocol;
-    wv::IpAddress address;
+int main(int argc, char* argv[]) {
+	// создаем вектор с аргументами командной строки
+	Args	cmd;
+	for (int i = 0; i < argc; ++i) {
+		cmd.push_back(argv[i]);
+	}
 
-    //цикл пока не получим значимые данные от пользователя
-    while (true) {
+	// пробуем обратиться ко второму элементу в векторе
+	try {
+		std::string module;
+		module = cmd.at(1);
+	}
+	// если второго аргумента не существует,
+	// сообщаем об ошибке и прекращаем работу приложения
+	catch (const std::out_of_range&) {
+		std::cerr << "Error! Client application needs arguments. Use command --help for more info.\n";
+		return 0;
+	}
+	
+	// задаем аллиасы справки
+	HelpCommands help({ "Help", "help", "--help", "-h" });
 
-        //стримим введеную пользователем строку
-        std::getline(std::cin, input);
-        std::stringstream line(input);
+	// создаем инстанс класс клиент.
+	Client client(cmd);
 
-        //получаем первый параметр пользователя
-        if (line >> protocol) {
-            if (protocol == "exit") {
-                return 0;
-            }
-            if (((protocol == "UDP")
-                || (protocol == "Udp")
-                || (protocol == "udp"))
-                    || ((protocol == "TCP")
-                    || (protocol == "Tcp")
-                    || (protocol == "tcp"))) {
-                std::string address_str;
+	// если второй аргумент командной строки соответствует одному из аллиасов справки,
+	// показывает справку и прекращаем работу приложения
+	auto itr = help.find(cmd[1]);
+	if (itr != help.end()) {
+		client.ShowHelp();
+		return 0;
+	}
 
-                //проверяем если ли второй параметр ip сервера,
-                //если нет то подключаться будем к "localhost"
-                if ((line >> address_str) && (wv::IpAddress(address_str) != wv::IpAddress::None)) {
-                    address = wv::IpAddress(address_str);
-                }
-                else {
-                    address = wv::IpAddress::LocalHost;
-                    break;
-                }
-            }
-            else {
-                std::cout << "Wrong protocol try again or print \"exit\"\n";
-                continue;
-            }
+	// пробуем запустить клиент с использованием протокола, полученного в аргументах
+	try {
+		client.Connect();
+	}
+	// в случае неудачи, сообщаем об этом пользователю и завершаем работу приложения
+	catch (const ClientFails& reason) {
+		std::cout << reason.what();
+		std::cout << "Use \"-h\" for more info\n";
+		return 0;
+	}
+    
+	// проверяем, успешно ли подключение к серверу
+    if (client.IsConnected()) {
+		//в случае успеха, готовимся принимать строку от пользователя
+        std::cout << "Input line to sent to server:\n";
+        std::string lineToSend, lineToReceive;
+        
+		//принимаем строку от пользователя
+		do {
+			std::getline(std::cin, lineToSend);			
+		} while (!lineToSend.size()); // проверка на пустую строку
+
+        //отправляет строку на сервер,
+        //и получаем ответ сервера
+        if (client.Update(lineToSend, lineToReceive)) {
+			std::cout << "> ";
+			std::cout << lineToReceive << std::endl;
         }
-    }
-
-    //в зависимости от введенного пользователем протокола подключения,
-    //создаем соответствующий инстанс объекта типа Client
-	Client		client(address);
-    if ((protocol == "UDP") || (protocol == "Udp") || (protocol == "udp")) {
-        std::cout << "Setting your client to use UDP protocol\n";
-        //client = new ClientUDP(address);
-		client.SetProtocol(new UDP(&client));
-    }
-    else if ((protocol == "TCP") || (protocol == "Tcp") || (protocol == "tcp")) {
-        std::cout << "Setting your client to use TCP protocol\n";
-        //client = new ClientTCP(address);
-		client.SetProtocol(new TCP(&client));
-    }
-
-    //благадаря предыдущим проверкам сюда не должны попасть
-    else {
-        return 1;
-    }
-
-    //пытаемся подключиться к серверу
-    if (client.Connect()) {
-
-        //в случае успеха, готовимся принимать строку от пользователя
-        std::cout << "Input line to sent to server or print \"exit\":\n";
-        while (client.IsConnected()) {
-
-            //принимаем строку от пользователя
-            std::string lineToSend, lineToReceive;
-            std::getline(std::cin, lineToSend);
-
-            //проверка на пустую строку
-            if (!lineToSend.size()) { continue; }
-
-            //выход из цикла при написании слова exit
-            if (lineToSend == "exit") { client.Disconnect(); break; }
-
-            //отправляет строку на сервер,
-            //и получаем ссылке ответ сервера
-            if (client.Update(lineToSend, lineToReceive)) {
-                std::cout << "> ";
-                std::cout << lineToReceive << std::endl << std::endl;
-            }
-        }
+		client.Disconnect();
     }
 }
