@@ -2,15 +2,21 @@
 #define SERVER_H
 #include "../../Network/Network.hpp"
 #include "../../NetworkDefinition.hpp"
-//#include <string>
 #include <vector>
-#include <thread>
-
+#include <functional>
 class Server
 {
 public:
     Server();
-    ~Server();
+	Server(void(*l_handler)(std::ostream&, const std::string&), std::ostream& cout);
+	template <class T>
+	Server(void(T::*l_handler)(std::ostream&,const std::string&, std::ostream& cout),
+		T* l_instance) : m_running(false)
+	{
+		m_stringHandler = std::bind(l_handler, l_instance, std::ref(cout), std::placeholders::_1);
+	}
+
+	~Server();
 
     //рабочий цикл сервера
     void Update();
@@ -51,7 +57,7 @@ private:
     //следит за колличеством полученных данных
     size_t	m_totalReceived;
 
-	//std::thread m_udpThread;
+	std::function<void(const std::string&)> m_stringHandler;
 };
 
 #endif // !Server_H
