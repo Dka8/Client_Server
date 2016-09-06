@@ -4,17 +4,26 @@
 #include "../../NetworkDefinition.hpp"
 #include <vector>
 #include <functional>
+#include <iostream>
+
 class Server
 {
 public:
+	// конструктор, использовать когда нет необходимости обрабатывать входящие данные
     Server();
+
+	// конструктор, принимает указатель на функцию, которая обрабатывает входящие данные,
+	// @cout поток записи обработанных данных
 	Server(void(*l_handler)(std::ostream&, const std::string&), std::ostream& cout);
-	template <class T>
-	Server(void(T::*l_handler)(std::ostream&,const std::string&, std::ostream& cout),
-		T* l_instance) : m_running(false)
-	{
-		m_stringHandler = std::bind(l_handler, l_instance, std::ref(cout), std::placeholders::_1);
-	}
+
+	// конструктор, принимает указатель на функцию, которая обрабатывает входящие данные,
+	// может быть функцией из любого класса
+	//template <typename T>
+	//Server(void(T::*l_handler)(std::ostream&,const std::string&, std::ostream& cout),
+	//	T* l_instance) : m_running(false)
+	//{
+	//	m_stringHandler = std::bind(l_handler, l_instance, std::ref(cout), std::placeholders::_1);
+	//}
 
 	~Server();
 

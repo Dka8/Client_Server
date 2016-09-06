@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 2.8)
 project(Client_Server)
 
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1y")
+
 if(${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
     set(OS_WINDOW 1)
     

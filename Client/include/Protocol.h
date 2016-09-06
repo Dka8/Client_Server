@@ -95,8 +95,7 @@ public:
 
 	bool Connect() {
 		if (m_client->IsConnected()) { return false; }
-		std::cout << "TCP protocol" << std::endl
-			<< "Bound client to port: " << m_socket.getLocalPort() << std::endl;
+		std::cout << "TCP protocol" << std::endl;
 		Connected();
 		return true;
 	}
